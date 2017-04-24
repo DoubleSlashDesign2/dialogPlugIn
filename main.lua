@@ -19,13 +19,13 @@ local braintonikDialog = require "plugin.braintonik-dialog"
 local widget = require( "widget" )
  
 
-
 -- ************************************************************************
 -- forward declaration
 -- ************************************************************************
 local doCalendarDialog
 local doNormalDialog
 local doInfoDialog
+local doSlidingDialog
 
 -- ************************************************************************
 -- get the real screen area
@@ -64,6 +64,8 @@ local function displayButton(name, y )
                 doInfoDialog()
             elseif buttonId == "CALENDAR" then
                 doCalendarDialog()
+            elseif buttonId == "SLIDING" then
+                doSlidingDialog()
             end
         end
     end
@@ -92,8 +94,156 @@ end
 yPos = displayButton("NORMAL DIALOG", yPos ) + 10
 yPos = displayButton("INFO DIALOG", yPos ) + 10
 yPos = displayButton("CALENDAR", yPos ) + 10
+yPos = displayButton("SLIDING", yPos ) + 10
 
 
+-- ************************************************************************
+--
+-- Display an informative dialog
+--
+-- ************************************************************************
+local menuExample = 0
+doSlidingDialog = function(params)
+    
+    local function callBack( itemId )
+        print( "Pressed item : ", itemId )
+    end
+    
+    local bkGradient = {
+        type = "gradient",
+        color1 = { 23/255, 172/255, 254/255  },
+        color2 = { 102/255, 244/255, 134/255  },
+        direction = "down",
+    }
+       
+    local options = { {}, {}, {} }
+    menuExample = menuExample + 1
+    if menuExample > #options then
+        menuExample = 1
+    end
+    
+    options[1] = {
+         appearsFrom = "left", -- optional left by default (left, right)
+         wDialog = 80, -- optional width is a 3rd of the screen is left/right is specified by default
+        -- hDialog = 80, -- optional, height is 3rd of the screen is top/bottom is specified by default
+        --overideBkInput = false, -- optional, true by default
+        overideBkColor = { 0,0,0, 0.2 }, -- optional
+        bkColor = {0,0,0,0.7}, -- optional
+        --bkGradient -- optional
+        --bkDiagonalGradient -- optional
+        buttonHandler = callBack, --required
+        
+        itemListHeight = 70,
+        itemListTextMarginPadding = 52, -- optional default is 10
+        itemListIconMarginPadding = 10, -- default is 10
+        
+        itemListJustify = "center", -- left, right, center -- optional defauklt is left
+        itemListcenterSpacing = 5,
+        itemListFont = native.systemFont, -- required
+        itemListFontSize = 10, -- optional
+        --itemListBkColor = { 1,1,1,1 }, -- optional
+        --itemListBkSelectedColor = { 1,1,1,1 }, -- optional
+        --itemListTextColor = {1,1,1,1}, -- optional
+        --itemListTextSelectedColor = { 1,1,1,1 }, -- optional
+        --itemListIconColor = {1,1,1,1}, -- optional
+        --itemListIconSelectedColor = { 1,1,1,1 }, -- optional
+        --itemIconBaseDir = -- optional  system.ResourceDirectory is default
+        
+        itemList = { { name="", height = 20, fontSize = 16, height = 40 },
+                     { iconFilename="Basket-WF.png", iconWidth = 32, iconHeight = 32, name="Cart" },
+                     { iconFilename="Cloud-WF.png", iconWidth = 32, iconHeight = 32, name="Cloud Access" },
+                     { iconFilename="Mail1-WF.png", iconWidth = 32, iconHeight = 32, name="Email Us" },
+                     { iconFilename="MS Config Manage-01-WF.png", iconWidth = 32, iconHeight = 32, name="Settings" },
+                     { iconFilename="Rating - 01.png", iconWidth = 32, iconHeight = 32, name="Rate Us" },
+                     { iconFilename="Help.png", iconWidth = 32, iconHeight = 32, name="Help" },
+
+                     }, -- required
+        
+        -- default screen
+        xScreen = xScreen,
+        yScreen = yScreen,
+        wScreen = wScreen,
+        hScreen = hScreen,
+    }
+    
+    options[2] = {
+        appearsFrom = "left", -- optional left by default (left, right)
+        wDialog = 150, -- optional width is a 3rd of the screen is left/right is specified by default
+        overideBkColor = { 0,0,0, 0.2 }, -- optional
+        bkGradient = bkGradient,
+        buttonHandler = callBack, --required
+        
+        borderSize = 4,
+
+        itemListTextMarginPadding = 44, -- optional default is 10
+        itemListIconMarginPadding = 10, -- default is 10   
+        
+        itemListJustify = "left", -- left, right, center -- optional defauklt is left
+        itemListcenterSpacing = 5,
+        itemListFont = native.systemFont, -- required
+        itemListFontSize = 12, -- optional
+        
+        itemList = { { iconFilename="head.png", iconWidth = 96, iconHeight = 96, name="Mr. Cat!", height = 142, justify="center" },
+                     { separator = true, height = 1, color = {1,1,1,0.5}, width = 120, justify = "center" },
+                     { iconFilename="Basket-WF.png", iconWidth = 24, iconHeight = 24, name="Cart", height = 50 },
+                     { iconFilename="Cloud-WF.png", iconWidth = 24, iconHeight = 24, name="Cloud Access", height = 50 },
+                     { iconFilename="Mail1-WF.png", iconWidth = 24, iconHeight = 24, name="Email Us", height = 50 },
+                     { iconFilename="MS Config Manage-01-WF.png", iconWidth = 24, iconHeight = 24, name="Settings", height = 50 },
+                     { iconFilename="Rating - 01.png", iconWidth = 24, iconHeight = 24, name="Rate Us", height = 50 },
+                     { iconFilename="Help.png", iconWidth = 24, iconHeight = 24, name="Help", height = 50 },
+
+                     }, -- required
+        
+        -- default screen
+        xScreen = xScreen,
+        yScreen = yScreen,
+        wScreen = wScreen,
+        hScreen = hScreen,
+    }
+    
+     options[3] = {
+        appearsFrom = "right", -- optional left by default (left, right)
+        wDialog = 150, -- optional width is a 3rd of the screen is left/right is specified by default
+        overideBkColor = { 0,0,0, 0.2 }, -- optional
+        buttonHandler = callBack, --required
+        
+        borderSize = 4,
+
+        itemListTextMarginPadding = 44, -- optional default is 10
+        itemListIconMarginPadding = 10, -- default is 10  
+        
+        itemListJustify = "right", -- left, right, center -- optional defauklt is left
+        itemListcenterSpacing = 5,
+        itemListFont = native.systemFont, -- required
+        itemListFontSize = 12, -- optional
+        
+        itemList = { { iconFilename="head.png", iconWidth = 96, iconHeight = 96, name="Mr. Cat!", height = 142, justify="center" },
+                     { separator = true, height = 1, color = {1,1,1,0.2}, width = 120, justify = "center" },
+                     { iconFilename="Basket-WF.png", iconWidth = 24, iconHeight = 24, name="Cart", height = 50, id=1 },
+                     { iconFilename="Cloud-WF.png", iconWidth = 24, iconHeight = 24, name="Cloud Access", height = 50, iconColor={0.5,0.5,1}, labelNormal={0.5,0.5,1}, },
+                     { iconFilename="Mail1-WF.png", iconWidth = 24, iconHeight = 24, name="Email Us", height = 50 },
+                     { iconFilename="MS Config Manage-01-WF.png", iconWidth = 24, iconHeight = 24, name="Settings", height = 50 },
+                     { separator = true, height = 4, color = {1,0.1,0.4},  },
+                     { iconFilename="Rating - 01.png", iconWidth = 24, iconHeight = 24, name="RATE US", height = 50, justify = "center", fontSize=8, bkNormal = {1,0.3,0.6}, iconColor={1,1,1}, labelNormal={1,1,1},  },
+                     { separator = true, height = 4, color = {0,0.5,0},},
+                     { iconFilename="Help.png", iconWidth = 48, iconHeight = 48, name="HELP", height = 100, justify = "center", fontSize=14, centerSpacing=10, bkNormal = {0.5,1,0.5}, iconColor={0,0.5,0}, labelNormal={0,0.5,0}, },
+
+                     }, -- required
+        
+        -- default screen
+        xScreen = xScreen,
+        yScreen = yScreen,
+        wScreen = wScreen,
+        hScreen = hScreen,
+    }
+
+    local group, error = braintonikDialog.displaySlidingDialog( options[ menuExample ] )
+    if group then
+        group:show()
+    end
+    
+    print( error ) 
+end
 
 -- ************************************************************************
 --
@@ -380,6 +530,72 @@ doCalendarDialog = function()
         end
     end
 
+
+    --[[]
+    options[1] = {
+        -- monthTable = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }, -- optional
+        -- monthTableAbr = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" }, -- optional
+        -- dayTable = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" }, -- optional
+        dayTableAbr = { "S", "M", "T", "W", "T", "F", "S" }, -- optional
+        hDialog = 310, -- optional
+        --bkColor = { 1,1,1 }, -- optional
+        nextPreviousFont = native.systemFontBold, -- required
+        nextPreviousFontSize = 18, -- required
+        --prevNextButtonBkColor -- optional
+        --prevNextTextColor -- optional
+        overideBkInput = true,
+        
+       bkGradient = bkGradient,
+        bkDiagonalGradient = true,
+        
+        templateStyle = "classic-1", -- optional
+        --colorStyle = "grey", --"red", -- optional
+        --noMonthNavigation = true,
+        
+        shadowColor = {0,0,0,0.3 },
+        shadowSize = 5,
+    
+        monthHeightBar = 100, -- optional
+        monthHeightBarColor = { 1,1,1,0 },
+        
+        --hideTheYear = false,
+        monthNumberFont = native.systemFont, -- required
+        --monthNumberFontSize = 32, -- optional
+        
+        weekDayFont = native.systemFont, -- required
+        --weekDayFontSize = 14, -- optional
+        --weekDayHeightBar = 40, -- optional
+        weekDayHeightBarColor = { 1,1,1,0 }, -- optional
+        weekDayTextColor = { 1,1,1 }, -- optional
+        weekDayLineColor = { 1,1,1, 0 }, -- optional
+        
+        dateNumberFont = native.systemFont, -- required
+        
+
+        todayDateNumberColor = { 0,0,0 }, -- optional (color of the curent selected day)
+        
+        --dateBkUnderlineSelected = {1,1,1} -- optional only work if rectangle mode
+        dateSelectedAsCircle = true,
+        dateBkSelected = {1,1,1,0.2}, -- optional
+        -- dateBkColor -- optional (warning mean a rect is drawn)
+        --dateBkSeparator -- optional
+        --dateNumberFontSize = 14, -- optional
+        dateNumberColor = { 1,1,1 }, -- optional
+        
+        weekEndNumberColor = { 1,1,1 }, -- optional
+        notInMonthNumberColor = { 1,1,1,0.2 }, -- optional
+        dateBeforeTodayNumberColor = { 1,1,1, 0.2 }, -- optional
+        
+        --selectDays = "2017-5-18,2017-4-19",
+        buttonHandler = onClickDate,
+        
+        -- we want to overide the default screen
+        xScreen = xScreen,
+        yScreen = yScreen,
+        wScreen = wScreen,
+        hScreen = hScreen,
+    }
+    --]]
      options[1] = {
 
         hDialog = 310, -- optional
@@ -500,5 +716,4 @@ doCalendarDialog = function()
     
     local error = braintonikDialog.displayCalendarDialog( options[calendarExample] )
     print( error )
-end
------------------------------------------------------------
+end-----------
