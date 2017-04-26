@@ -237,11 +237,7 @@ doSlidingDialog = function(params)
         hScreen = hScreen,
     }
 
-    local group, error = braintonikDialog.displaySlidingDialog( options[ menuExample ] )
-    if group then
-        group:show()
-    end
-    
+    local error = braintonikDialog.displaySlidingDialog( options[ menuExample ] )
     print( error ) 
 end
 
