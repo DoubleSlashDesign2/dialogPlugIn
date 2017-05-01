@@ -14,9 +14,9 @@ Look at the documentation of how to use
 
 # History
 
--v1.5 Calendar : Add support for date with leading zero and the ability to change year with classic-3 templates
--V1.4 Calendar : Add support for changing the color of a month in the calendar dialog (monthTextColor)
--V1.3 added support for sliding menu
--V1.2 Added support for calendar
--V1.1 Added informative dialog support
--V1.0 Initial release
+- v1.5 Calendar : Add support for date with leading zero and the ability to change year with classic-3 templates
+- V1.4 Calendar : Add support for changing the color of a month in the calendar dialog (monthTextColor)
+- V1.3 added support for sliding menu
+- V1.2 Added support for calendar
+- V1.1 Added informative dialog support
+- V1.0 Initial release
