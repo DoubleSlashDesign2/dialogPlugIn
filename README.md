@@ -14,6 +14,7 @@ Look at the documentation of how to use
 
 # History
 
+- V1.6 Calendar : Add ability to add space between previous and next button with classic-1 style (spaceBetweenPrevNextButton)
 - v1.5 Calendar : Add support for date with leading zero and the ability to change year with classic-3 templates
 - V1.4 Calendar : Add support for changing the color of a month in the calendar dialog (monthTextColor)
 - V1.3 added support for sliding menu
