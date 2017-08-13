@@ -14,6 +14,7 @@ Look at the documentation of how to use
 
 # History
 
+- v1.8 Carousel : Add ability to create a carousel with 4 types of visual templates and the ability to create custom one
 - V1.6 Calendar : Add ability to add space between previous and next button with classic-1 style (spaceBetweenPrevNextButton)
 - v1.5 Calendar : Add support for date with leading zero and the ability to change year with classic-3 templates
 - V1.4 Calendar : Add support for changing the color of a month in the calendar dialog (monthTextColor)
