@@ -26,6 +26,7 @@ local doCalendarDialog
 local doNormalDialog
 local doInfoDialog
 local doSlidingDialog
+local doCarouselDialog
 
 -- ************************************************************************
 -- get the real screen area
@@ -66,6 +67,8 @@ local function displayButton(name, y )
                 doCalendarDialog()
             elseif buttonId == "SLIDING" then
                 doSlidingDialog()
+            elseif buttonId == "CAROUSEL" then
+                doCarouselDialog()
             end
         end
     end
@@ -95,6 +98,7 @@ yPos = displayButton("NORMAL DIALOG", yPos ) + 10
 yPos = displayButton("INFO DIALOG", yPos ) + 10
 yPos = displayButton("CALENDAR", yPos ) + 10
 yPos = displayButton("SLIDING", yPos ) + 10
+YPos = displayButton("CAROUSEL", yPos ) + 10
 
 
 -- ************************************************************************
@@ -149,7 +153,7 @@ doSlidingDialog = function(params)
         --itemListIconSelectedColor = { 1,1,1,1 }, -- optional
         --itemIconBaseDir = -- optional  system.ResourceDirectory is default
         
-        itemList = { { name="", height = 20, fontSize = 16, height = 40 },
+        itemList = { { separator = true, height = 100, color = {0,0,0,0}, },
                      { iconFilename="Basket-WF.png", iconWidth = 32, iconHeight = 32, name="Cart" },
                      { iconFilename="Cloud-WF.png", iconWidth = 32, iconHeight = 32, name="Cloud Access" },
                      { iconFilename="Mail1-WF.png", iconWidth = 32, iconHeight = 32, name="Email Us" },
@@ -164,6 +168,13 @@ doSlidingDialog = function(params)
         yScreen = yScreen,
         wScreen = wScreen,
         hScreen = hScreen,
+        
+        --easing.inOutElastic
+        
+        easingOut = easing.outExpo,
+        timeOut = 500,
+        easingIn = easing.outExpo,
+        timeIn = 500,
     }
     
     options[2] = {
@@ -237,7 +248,7 @@ doSlidingDialog = function(params)
         hScreen = hScreen,
     }
 
-    local error = braintonikDialog.displaySlidingDialog( options[ menuExample ] )
+    local error = braintonikDialog.displaySlidingDialog( options[ menuExample ] )   
     print( error ) 
 end
 
@@ -548,8 +559,8 @@ doCalendarDialog = function()
         --colorStyle = "grey", --"red", -- optional
         --noMonthNavigation = true,
         
-        shadowColor = {0,0,0,0.3 },
-        shadowSize = 5,
+        --shadowColor = {0,0,0,0.3 },
+        --shadowSize = 5,
     
         monthHeightBar = 100, -- optional
         monthHeightBarColor = { 1,1,1,0 },
@@ -599,11 +610,20 @@ doCalendarDialog = function()
 
         overideBkInput = true,
 
-        templateStyle = "classic-2",
+        templateStyle = "classic-3",
         colorStyle = "grey",
         
         shadowColor = {0,0,0,0.3 },
         shadowSize = 5,
+        
+                weekDayTextColor = {0,0,0},
+        weekDayHeightBarColor ={ 0,1,0},
+         
+        monthTextColor = {0,0,0},
+        monthHeightBarColor = {1,1,1},
+        
+        todayDateNumberColor = {1,1,1},
+        todayDateNumberBkColor={1,0,0},
     
         --monthHeightBar = 100, -- optional
 
@@ -611,7 +631,7 @@ doCalendarDialog = function()
         weekDayFont = native.systemFont, -- required
         dateNumberFont = native.systemFont, -- required
         
-        selectDays = "2017-5-18,2017-4-19,2017-4-20,2017-4-21",
+        selectDays = "2017-05-18,2017-4-19,2017-4-20,2017-4-21",
         buttonHandler = onClickDate,
         
         -- we want to overide the default screen
@@ -619,6 +639,8 @@ doCalendarDialog = function()
         yScreen = yScreen,
         wScreen = wScreen,
         hScreen = hScreen,
+        
+        todayDateNumberBkColor={1,0,0},
     }
     
     options[2] = {
@@ -634,6 +656,7 @@ doCalendarDialog = function()
         templateStyle = "classic-1",
         shadowColor = {0,0,0,0.3 },
         shadowSize = 5,
+        spaceBetweenPrevNextButton = 20,
     
         monthHeightBar = 100,
         monthHeightBarColor = { 1,1,1,0 },
@@ -709,7 +732,66 @@ doCalendarDialog = function()
     }
     
     braintonikDialog.addTransition( options, "RightToLeft" )
-    
     local error = braintonikDialog.displayCalendarDialog( options[calendarExample] )
     print( error )
-end-----------
+end
+
+-- ************************************************************************
+--
+-- Display a carousel dialog
+--
+-- ************************************************************************
+local carouselExample = 1
+doCarouselDialog = function(params)
+    
+    local function onCreatePage(status, pageNumber, width, height, closeFct)
+        print(status, pageNumber, width, height)
+    end
+  
+    local options = {
+        
+        bkColor = { 0,0,0,0 }, -- optional default if full black
+    
+        dotCircleSize = 20, -- optional default is 26
+        dotSpacing = 5, -- optional default is 10
+        dotColor = { 1,1,1 },  -- optional default is { 0,0,0 }
+        dotBottomPadding = 20,
+        
+        closeIfClickOutside = true, -- false by default
+        
+        closeButtonLabel = "CLOSE",
+        closeButtonHeight = 40, -- optional default is 40
+        closeButtonFont = native.systemFont, 
+        closeButtonFontSize = 18,
+        
+        closeButtonLabelNormal = { 0,0,0 },
+        closeButtonLabelSelected = { 0,0,0,0.5 },
+        closeButtonBkNormal = { 1,1,1 },
+        closeButtonBkSelected = { 1,1,1, 0.5 },
+         
+        --left = 10,
+        --top = 50,
+        hDialog = 400,
+        wDialog = 300,
+        
+        appearsFrom = "left",
+        managePageFct = onCreatePage,
+        
+        itemList = { 
+            { template = "image", imageDisplay="bestFit", imageFileName = "carouselImg.jpg", bkColor = {1,1,1} }, -- imageFileNameBaseDir
+            { template = "image", imageDisplay="maximize", imageFileName = "carouselImg.jpg" }, -- imageFileNameBaseDir
+            { template = "title+text", title="Lorem ipsum", text="Cenean et iaculis quam. Morbi tincidunt finibus dui et dignissim.", titlePHeight = 60, titleFontSize = 24, textFontSize = 16, textPHeight = 40, padding = 20 },
+            { template = "icon+title+text", title="Page 3 ", text="Cenean et iaculis quam. Morbi tincidunt finibus dui et dignissim.", titlePHeight = 0, titleFontSize = 24, textFontSize = 16, textPHeight = 25, padding = 20, iconPHeight = 50, iconFileName = "head.png" , iconWidth = 96, iconHeight = 96}, -- iconFileNameBaseDir
+            { template = "custom" },
+        },
+        
+        -- default screen
+        xScreen = xScreen,
+        yScreen = yScreen,
+        wScreen = wScreen,
+        hScreen = hScreen,   
+    }
+    
+    local error = braintonikDialog.displayCarouselDialog( options )
+    print(error)
+end
