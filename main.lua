@@ -747,6 +747,16 @@ doCarouselDialog = function(params)
     local function onCreatePage(status, pageNumber, width, height, closeFct)
         print(status, pageNumber, width, height)
     end
+    
+    -- called when the user click on close button. The page parameter specify on what page was the user when he close the carousel
+    local function onCloseButton(page)
+        print( "onCloseButton", page )
+    end
+    
+    -- called when the user click on an image. The page parameter specify the page in case you want to have on callback for all pages.
+    local function imgCallBack(page)
+        print( "imgCallBack", page )
+    end
   
     local options = {
         
@@ -768,6 +778,8 @@ doCarouselDialog = function(params)
         closeButtonLabelSelected = { 0,0,0,0.5 },
         closeButtonBkNormal = { 1,1,1 },
         closeButtonBkSelected = { 1,1,1, 0.5 },
+        
+        buttonHandler = onCloseButton,
          
         --left = 10,
         --top = 50,
@@ -778,10 +790,10 @@ doCarouselDialog = function(params)
         managePageFct = onCreatePage,
         
         itemList = { 
-            { template = "image", imageDisplay="bestFit", imageFileName = "carouselImg.jpg", bkColor = {1,1,1} }, -- imageFileNameBaseDir
+            { template = "image", imageDisplay="bestFit", imageFileName = "carouselImg.jpg", bkColor = {1,1,1}, imgCloseCallback = imgCallBack }, -- imageFileNameBaseDir
             { template = "image", imageDisplay="maximize", imageFileName = "carouselImg.jpg" }, -- imageFileNameBaseDir
             { template = "title+text", title="Lorem ipsum", text="Cenean et iaculis quam. Morbi tincidunt finibus dui et dignissim.", titlePHeight = 60, titleFontSize = 24, textFontSize = 16, textPHeight = 40, padding = 20 },
-            { template = "icon+title+text", title="Page 3 ", text="Cenean et iaculis quam. Morbi tincidunt finibus dui et dignissim.", titlePHeight = 0, titleFontSize = 24, textFontSize = 16, textPHeight = 25, padding = 20, iconPHeight = 50, iconFileName = "head.png" , iconWidth = 96, iconHeight = 96}, -- iconFileNameBaseDir
+            { template = "icon+title+text", title="Page 3 ", text="Cenean et iaculis quam. Morbi tincidunt finibus dui et dignissim.", iconCloseCallback = imgCallBack, titlePHeight = 0, titleFontSize = 24, textFontSize = 16, textPHeight = 25, padding = 20, iconPHeight = 50, iconFileName = "head.png" , iconWidth = 96, iconHeight = 96}, -- iconFileNameBaseDir
             { template = "custom" },
         },
         
