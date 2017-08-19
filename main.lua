@@ -849,7 +849,6 @@ doUIButton = function()
         spaceBetweenIconAndText = 5,
         
         align = "center",
-        touchEffect = "smaller",
         
         shape = "circle",
         shapeBkColor = { 0,0,0, 0.4 },
