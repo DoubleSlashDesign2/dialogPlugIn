@@ -827,11 +827,12 @@ doUIButton = function()
         uiButtonGroup = nil
     end
     
+    local button_1
     local function buttonOnOff()
-        if buttonCircleInstance:isSelected() == false then
-            buttonCircleInstance:select(true)
+        if button_1:isSelected() == false then
+            button_1:select(true)
         else
-            buttonCircleInstance:select(false)
+            button_1:select(false)
         end
     end
     
@@ -885,8 +886,8 @@ doUIButton = function()
     }
     
     local error
-    buttonCircleInstance, error = braintonikDialog.newUIButton( buttonExample_1 )
-    print( buttonCircleInstance, error )
+    button_1, error = braintonikDialog.newUIButton( buttonExample_1 )
+    print( button_1, error )
     
     local buttonExample_2 = {
     
@@ -937,8 +938,8 @@ doUIButton = function()
         },
     }
     
-    buttonRect1Instance, error = braintonikDialog.newUIButton( buttonExample_2 )
-    print( buttonRect1Instance, error )
+    local button_2, error = braintonikDialog.newUIButton( buttonExample_2 )
+    print( button_1, error )
     
     local buttonExample_3 = {
         
@@ -988,8 +989,8 @@ doUIButton = function()
         },
     }
     
-    buttonRect2Instance, error = braintonikDialog.newUIButton( buttonExample_3 )
-    print( buttonRect2Instance, error )
+    local button_3, error = braintonikDialog.newUIButton( buttonExample_3 )
+    print( button_3, error )
     
     local buttonExample_4 = {
         
@@ -1049,8 +1050,8 @@ doUIButton = function()
         },
     }
     
-    buttonRect4Instance, error = braintonikDialog.newUIButton( buttonExample_4 )
-    print( buttonRect4Instance, error )
+    local button_4, error = braintonikDialog.newUIButton( buttonExample_4 )
+    print( button_4, error )
     
     local buttonExample_5 = {
         
@@ -1107,8 +1108,8 @@ doUIButton = function()
         },
     }
     
-    buttonRect3Instance, error = braintonikDialog.newUIButton( buttonExample_5 )
-    print( buttonRect3Instance, error )
+    local button_5, error = braintonikDialog.newUIButton( buttonExample_5 )
+    print( button_5, error )
     
     local buttonExample_6 = {
         
@@ -1156,6 +1157,6 @@ doUIButton = function()
 
     }
     
-    buttonRect5Instance, error = braintonikDialog.newUIButton( buttonExample_6 )
-    print( buttonRect5Instance, error )
+    local button_6, error = braintonikDialog.newUIButton( buttonExample_6 )
+    print( button_6, error )
 end
