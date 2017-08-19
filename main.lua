@@ -27,6 +27,7 @@ local doNormalDialog
 local doInfoDialog
 local doSlidingDialog
 local doCarouselDialog
+local doUIButton
 
 -- ************************************************************************
 -- get the real screen area
@@ -69,6 +70,8 @@ local function displayButton(name, y )
                 doSlidingDialog()
             elseif buttonId == "CAROUSEL" then
                 doCarouselDialog()
+            elseif buttonId == "UI BUTTON" then
+                doUIButton()
             end
         end
     end
@@ -98,8 +101,8 @@ yPos = displayButton("NORMAL DIALOG", yPos ) + 10
 yPos = displayButton("INFO DIALOG", yPos ) + 10
 yPos = displayButton("CALENDAR", yPos ) + 10
 yPos = displayButton("SLIDING", yPos ) + 10
-YPos = displayButton("CAROUSEL", yPos ) + 10
-
+yPos = displayButton("CAROUSEL", yPos ) + 10
+yPos = displayButton("UI BUTTON", yPos ) + 10
 
 -- ************************************************************************
 --
@@ -469,7 +472,7 @@ doNormalDialog = function()
     mainUIGroup.isVisible = false
     
     -- predefine template : "roundClassicGrey", "rectGreyBlue", "roundWhiteBlue", "roundWhiteBusiness" }
-    local options = braintonikDialog.applyOptionsFromTemplate( "roundClassicGrey" )
+    local options = braintonikDialog.applyOptionsFromTemplate( "roundWhiteBusiness" )
     
     -- we want a predefined animation
     braintonikDialog.addTransition( options, "RightToLeft" )
@@ -790,7 +793,7 @@ doCarouselDialog = function(params)
         managePageFct = onCreatePage,
         
         itemList = { 
-            { template = "image", imageDisplay="bestFit", imageFileName = "carouselImg.jpg", bkColor = {1,1,1}, imgCloseCallback = imgCallBack }, -- imageFileNameBaseDir
+            { template = "image", imageDisplay="bestFit", imageFileName = "carouselImg.jpg", bkColor = {1,1,1, 0}, imgCloseCallback = imgCallBack }, -- imageFileNameBaseDir
             { template = "image", imageDisplay="maximize", imageFileName = "carouselImg.jpg" }, -- imageFileNameBaseDir
             { template = "title+text", title="Lorem ipsum", text="Cenean et iaculis quam. Morbi tincidunt finibus dui et dignissim.", titlePHeight = 60, titleFontSize = 24, textFontSize = 16, textPHeight = 40, padding = 20 },
             { template = "icon+title+text", title="Page 3 ", text="Cenean et iaculis quam. Morbi tincidunt finibus dui et dignissim.", iconCloseCallback = imgCallBack, titlePHeight = 0, titleFontSize = 24, textFontSize = 16, textPHeight = 25, padding = 20, iconPHeight = 50, iconFileName = "head.png" , iconWidth = 96, iconHeight = 96}, -- iconFileNameBaseDir
@@ -806,4 +809,353 @@ doCarouselDialog = function(params)
     
     local error = braintonikDialog.displayCarouselDialog( options )
     print(error)
+end
+
+doUIButton = function()
+    
+    local uiButtonGroup = display:newGroup()
+    mainUIGroup.isVisible = false
+    
+    local rcBack = display.newRect( uiButtonGroup, xScreen, yScreen, wScreen, hScreen )
+    rcBack.anchorX = 0
+    rcBack.anchorY = 0
+    rcBack:setFillColor(0.8)
+    
+    local function buttonCallback()
+        mainUIGroup.isVisible = true
+        uiButtonGroup:removeSelf()
+        uiButtonGroup = nil
+    end
+    
+    local function buttonOnOff()
+        if buttonCircleInstance:isSelected() == false then
+            buttonCircleInstance:select(true)
+        else
+            buttonCircleInstance:select(false)
+        end
+    end
+    
+    local yOffset = 50
+    local buttonExample_1 = {
+        
+        group = uiButtonGroup,
+        callBack = buttonOnOff,
+
+        x = 100,
+        y = yOffset,
+        w = 120,
+        h = 120,
+        spaceBetweenIconAndText = 5,
+        
+        align = "center",
+        touchEffect = "smaller",
+        
+        shape = "circle",
+        shapeBkColor = { 0,0,0, 0.4 },
+        shapeBorder = 2,
+        shapeBorderColor = { 0.4,0.4,0.4, 1 },
+
+        shadowTable = {
+            width = 8,
+            gradientColor = {
+            type = "gradient",
+                color1 = { 0.7, 0.7, 0.7 },
+                color2 = {0.9, 0.9, 0.9  },
+                direction = "down"
+            },
+        },
+
+        iconTable = {
+            icon = "power.png",        
+            w = 32,
+            h = 32,
+            iconColor = { 0.5, 1, 0.5, 1 },
+            iconSelColor = { 1, 0.5, 0.5, 1 },
+        },
+        
+        textTable = {
+            text = "ON",
+            textSel = "OFF",
+            fontSize = 14,
+            fontType = native.systemFont,
+            color = { 0.5, 1, 0.5, 1 },
+            selectedColor = { 1, 0.5, 0.5, 1 },
+            disableColor = { 0.7, 0.7, 1, 1  },
+        },
+    }
+    
+    local error
+    buttonCircleInstance, error = braintonikDialog.newUIButton( buttonExample_1 )
+    print( buttonCircleInstance, error )
+    
+    local buttonExample_2 = {
+    
+        group = uiButtonGroup,
+        callBack = buttonCallback,
+
+        x = 100,
+        y = yOffset + 140,
+        w = 120,
+        h = 40,
+ 
+        align = "center",
+        alignLeftRightMargin = 20,
+        spaceBetweenIconAndText = 10,
+        
+        shapeBkGradientColor = {
+            type = "gradient",
+            color1 = { 120/255,211/255,216/255 },
+            color2 = { 14/255,169/255,173/255  },
+            direction = "down"
+        },
+        
+        shape = "roundedRect",
+        shapeCornerRadius = 20,
+        shapeBorder = 2,
+        shapeBorderColor = { 11/255,136/255,142/255 },
+        shapeBkSelColor = { 1, 0, 0.4, 1 },
+        shapeSelBorderColor = { 1,1,1, 1 },
+        
+        shadowTable = {
+            width = 8,
+            gradientColor = {
+                type = "gradient",
+                color1 = { 0.7, 0.7, 0.7 },
+                color2 = {0.9, 0.9, 0.9  },
+                direction = "down"
+            },
+        },
+        
+        textTable = {
+            text = "LOGIN",
+            textSel = "LOGOUT",
+            fontSize = 12,
+            fontType = native.systemFont,
+            color = { 1,1,1,1 },
+            selectedColor = { 0.9, 0.9, 1, 1 },
+            disableColor = { 0.7, 0.7, 1, 1  },
+        },
+    }
+    
+    buttonRect1Instance, error = braintonikDialog.newUIButton( buttonExample_2 )
+    print( buttonRect1Instance, error )
+    
+    local buttonExample_3 = {
+        
+        group = uiButtonGroup,
+        callBack = buttonCallback,
+
+        x = 10,
+        y = yOffset + 210,
+        w = 140,
+        h = 40,
+
+        align = "left",
+        alignLeftRightMargin = 5,
+        spaceBetweenIconAndText = 0,
+        
+        shape = "rect",
+        shapeBkGradientColor = {
+            type = "gradient",
+            color1 = { 59/255, 45/255, 68/255, 1 },
+            color2 = { 93/255, 77/255, 105/255, 1 },
+            direction = "right"
+        },
+        
+        shapeBkSelGradientColor= {
+            type = "gradient",
+            color1 = { 59/255, 45/255, 68/255, 1 },
+            color2 = { 93/255, 77/255, 105/255, 1 },
+            direction = "left"
+        },
+        
+        shapeBorder = 2,
+        shapeBorderColor = { 109/255, 91/255, 123/255, 1 },
+        shapeSelBorderColor = { 1,1,1, 1 },
+        
+        textTable = {
+            text = "Locate me",
+            fontSize = 14,
+            fontType = native.systemFont,
+            color = { 1,1,1,1 },
+            selectedColor = { 0.9, 0.9, 1, 1 },
+            disableColor = { 0.7, 0.7, 1, 1  },
+        },
+        iconTable = {
+            icon = "pin.png",        
+            w = 24,
+            h = 24,
+        },
+    }
+    
+    buttonRect2Instance, error = braintonikDialog.newUIButton( buttonExample_3 )
+    print( buttonRect2Instance, error )
+    
+    local buttonExample_4 = {
+        
+        group = uiButtonGroup,
+        callBack = buttonCallback,
+
+        x = 160,
+        y = yOffset + 210,
+        w = 140,
+        h = 40,
+
+        align = "left",
+        alignLeftRightMargin = 5,
+        spaceBetweenIconAndText = 0,
+        
+        shape = "rect",
+        shapeBkGradientColor = {
+            type = "gradient",
+            color1 = { 59/255, 45/255, 68/255, 1 },
+            color2 = { 93/255, 77/255, 105/255, 1 },
+            direction = "right"
+        },
+        
+        shapeBkSelGradientColor= {
+            type = "gradient",
+            color1 = { 59/255, 45/255, 68/255, 1 },
+            color2 = { 93/255, 77/255, 105/255, 1 },
+            direction = "left"
+        },
+        
+        shapeBorder = 2,
+        shapeBorderColor = { 109/255, 91/255, 123/255, 1 },
+        shapeSelBorderColor = { 1,1,1, 1 },
+        
+        textTable = {
+            text = "Locate me",
+            fontSize = 14,
+            fontType = native.systemFont,
+            color = { 1,1,1,1 },
+            selectedColor = { 0.9, 0.9, 1, 1 },
+            disableColor = { 0.7, 0.7, 1, 1  },
+        },
+        
+        iconTable = {
+            icon = "pin.png",        
+            w = 24,
+            h = 24,
+        },
+        
+        glassTable = {
+            gradientColor = {
+                type = "gradient",
+                color1 = { 27/255, 20/255, 32/255 }, -- { 1,1,1,0 }
+                color2 = { 36/255, 27/255, 44/255, 0.5 }, -- { 1,1,1,0.2 }
+                direction = "right"
+            },
+        },
+    }
+    
+    buttonRect4Instance, error = braintonikDialog.newUIButton( buttonExample_4 )
+    print( buttonRect4Instance, error )
+    
+    local buttonExample_5 = {
+        
+        group = uiButtonGroup,
+        callBack = buttonCallback,
+
+        x = 10,
+        y = yOffset + 270,
+        w = 65,
+        h = 34,
+
+        align = "left",
+        alignLeftRightMargin = 10,
+        spaceBetweenIconAndText = 5,
+        
+        shape = "rect",
+        shapeBkGradientColor = {
+            type = "gradient",
+            color1 = { 0.7, 0.7, 0.7 },
+            color2 = {0.9, 0.9, 0.9  },
+            direction = "up"
+        },
+        
+        shapeBkSelGradientColor = {
+            type = "gradient",
+            color1 = { 0.7, 0.7, 0.7 },
+            color2 = {0.9, 0.9, 0.9  },
+            direction = "up"
+        },
+
+        textTable = {
+            text = "On",
+            textSel = "Off",
+            fontSize = 14,
+            fontType = native.systemFont,
+            color = { 0.3,0.3,0.3 },
+        },
+        
+        iconTable = {
+            icon = "power.png",        
+            w = 16,
+            h = 16,
+            iconColor = { 0.4,1,0.4 },
+            iconSelColor = { 1,0.4,0.41 },
+        },
+        
+        shadowTable = {
+            width = 4,
+            color = { 0.4,0.4,0.4 },
+            xOffset = 6,
+            yOffset = 6,
+            wOffset = -9,
+            hOffset = -9,
+        },
+    }
+    
+    buttonRect3Instance, error = braintonikDialog.newUIButton( buttonExample_5 )
+    print( buttonRect3Instance, error )
+    
+    local buttonExample_6 = {
+        
+        group = uiButtonGroup,
+        callBack = buttonCallback,
+
+        x = 90,
+        y = yOffset + 270,
+        w = 65,
+        h = 34,
+
+        align = "left",
+        alignLeftRightMargin = 10,
+        spaceBetweenIconAndText = 5,
+        
+        shape = "rect",
+        shapeBkGradientColor = {
+            type = "gradient",
+            color1 = { 0.7, 0.7, 0.7 },
+            color2 = {0.9, 0.9, 0.9  },
+            direction = "up"
+        },
+        
+        shapeBkSelGradientColor = {
+            type = "gradient",
+            color1 = { 0.7, 0.7, 0.7 },
+            color2 = {0.9, 0.9, 0.9  },
+            direction = "up"
+        },
+
+        textTable = {
+            text = "Lorem",
+            fontSize = 12,
+            fontType = native.systemFont,
+            color = { 0.3,0.3,0.3 },
+        },
+        
+        glassTable = {
+            color = { 0.2,1,0.8 },
+            selColor = { 0.8,0.2,0.5 },
+            glassHeight = 2,
+            xOffset = 4,
+            yOffset = 4,
+        },
+
+    }
+    
+    buttonRect5Instance, error = braintonikDialog.newUIButton( buttonExample_6 )
+    print( buttonRect5Instance, error )
 end
