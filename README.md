@@ -14,6 +14,7 @@ Look at the documentation of how to use
 
 # History
 
+- v2.0 Intruduce the first UI widget : Button. Add also support for the Close button of the Carousel to be replaced by the new UI button.
 - v1.9 Carousel : Add more options to be notified when a user click on the close button or on some icon/images
 - v1.8 Carousel : Add ability to create a carousel with 4 types of visual templates and the ability to create custom one
 - V1.6 Calendar : Add ability to add space between previous and next button with classic-1 style (spaceBetweenPrevNextButton)
