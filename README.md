@@ -14,7 +14,7 @@ Look at the documentation of how to use
 
 # History
 
-- v2.1 Add support for left/center alignment for text/title in the Carousel/Info Dialog. Add a new sample code as well that is more structure as the plugin is growing.
+- v2.1 Add support for left/center alignment for text/title in the Carousel/Info Dialog. Fix also a problem with the width of the button in the PopUpDialog when vertical mode is choosen. Add a new sample code as well that is more structure as the plugin is growing.
 - v2.0 Introduce the first UI widget : Button. Add also support for the Close button of the Carousel to be replaced by the new UI button.
 - v1.9 Carousel : Add more options to be notified when a user click on the close button or on some icon/images
 - v1.8 Carousel : Add ability to create a carousel with 4 types of visual templates and the ability to create custom one
