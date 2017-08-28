@@ -1,15 +1,20 @@
 # dialogPlugIn
 
-The Dialog plugin let you display, customize and manage easily 4 types of dialogs:
+### The Dialog plugin let you display, customize and manage easily 5 types of dialogs:
 
-- Multiple buttons dialog
+- Multiple buttons PopUp dialog
 - Informative dialog
 - Calendar dialog
 - Sliding menu
+- Carousel
 
-Each dialog support a vast array of customization parameters to get the visual that will fit you app. The Dialog plugin is a CoronaLabs plugin.
+### And new widget support:
 
-Look at the documentation of how to use
+- UI button
+
+Each dialog/Widget support a vast array of customization parameters to get the visual that will fit you app. The Dialog plugin is a CoronaLabs plugin.
+
+Look at the documentation of how to use. A complete sample of how to use the plugin is in the folder testBraintonikPlugin.
 
 
 # History
