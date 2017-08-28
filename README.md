@@ -14,7 +14,7 @@
 
 Each dialog/Widget support a vast array of customization parameters to get the visual that will fit you app. The Dialog plugin is a CoronaLabs plugin.
 
-Look at the documentation of how to use. A complete sample of how to use the plugin is in the folder testBraintonikPlugin.
+Look at the documentation of how to use in the Wiki. A complete sample of how to use the plugin is in the folder testBraintonikPlugin.
 
 
 # History
