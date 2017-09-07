@@ -19,6 +19,7 @@ Look at the documentation of how to use in the Wiki. A complete sample of how to
 
 # History
 
+- v2.3 Add support to open the carousel at a specific page.
 - v2.2 Add support to change the color of the title and the text for the title and text in a Carousel page.
 - v2.1 Add support for left/center alignment for text/title in the Carousel/Info Dialog. Fix also a problem with the width of the button in the PopUpDialog when vertical mode is choosen. Add a new sample code as well that is more structure as the plugin is growing.
 - v2.0 Introduce the first UI widget : Button. Add also support for the Close button of the Carousel to be replaced by the new UI button.
